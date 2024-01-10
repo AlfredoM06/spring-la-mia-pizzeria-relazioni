@@ -1,0 +1,3 @@
+insert into db_pizzeria.pizze ( price, description, name) values( 3, 'pizza classica con pomodoro, mozzarella, basilico e olio di oliva', 'margherita');
+insert into db_pizzeria.pizze ( price, description, name) values ( 5, 'pizza con mozzarella, panna, crocchè e prosciutto cotto', 'fiocco');
+insert into db_pizzeria.pizze ( price, description, name) values ( 4, 'pizza con mozzarella, panna, prosciutto cotto e mais', 'mimosa');
