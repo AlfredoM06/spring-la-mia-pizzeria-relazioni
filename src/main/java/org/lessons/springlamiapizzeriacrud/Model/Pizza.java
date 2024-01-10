@@ -10,6 +10,7 @@ public class Pizza {
     private Integer id;
     private String name;
     private String description;
+    private String foto;
     private Integer price;
 
     public Integer getId() {
@@ -42,5 +43,13 @@ public class Pizza {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

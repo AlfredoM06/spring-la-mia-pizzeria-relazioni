@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,5 +40,17 @@ public class PizzeriaController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
 
         }
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("pizze", new Pizza());
+        return "pizze/create";
+    }
+
+    @PostMapping("/create")
+    public String store(Pizza formPizza) {
+        Pizza savePizza = pizzaRepository.save(formPizza);
+        return "redirect: /pizze/show/" + savePizza.getId();
     }
 }
