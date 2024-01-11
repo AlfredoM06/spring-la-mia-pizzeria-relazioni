@@ -56,4 +56,28 @@ public class PizzeriaController {
         Pizza savePizza = pizzaRepository.save(formPizza);
         return "redirect:/pizze/show/" + savePizza.getId();
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Optional<Pizza> result = pizzaRepository.findById(id);
+        if (result.isPresent()) {
+            model.addAttribute("pizza", result.get());
+            return "pizze/edit";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id" + id + "not found");
+
+        }
+
+    }
+
+    @PostMapping("/edit/{id}")
+    String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "pizze/edit";
+        }
+        Pizza savePizza = pizzaRepository.save(formPizza);
+        return "redirect:/pizze/show/" + id;
+    }
+
+
 }
