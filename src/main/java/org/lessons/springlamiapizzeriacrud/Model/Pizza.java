@@ -3,6 +3,7 @@ package org.lessons.springlamiapizzeriacrud.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pizze")
@@ -16,7 +17,7 @@ public class Pizza {
     private String description;
     @NotEmpty
     private String foto;
-    @NotEmpty
+    @NotNull
     @Min(1)
     private Integer price;
 

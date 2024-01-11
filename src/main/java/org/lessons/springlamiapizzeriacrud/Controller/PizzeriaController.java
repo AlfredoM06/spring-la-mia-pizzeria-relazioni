@@ -54,6 +54,6 @@ public class PizzeriaController {
         }
 
         Pizza savePizza = pizzaRepository.save(formPizza);
-        return "redirect: /pizze/show/" + savePizza.getId();
+        return "redirect:/pizze/show/" + savePizza.getId();
     }
 }
