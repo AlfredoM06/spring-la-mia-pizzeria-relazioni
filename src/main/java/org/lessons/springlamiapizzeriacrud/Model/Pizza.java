@@ -1,6 +1,8 @@
 package org.lessons.springlamiapizzeriacrud.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "pizze")
@@ -8,9 +10,14 @@ public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @NotEmpty
     private String foto;
+    @NotEmpty
+    @Min(1)
     private Integer price;
 
     public Integer getId() {

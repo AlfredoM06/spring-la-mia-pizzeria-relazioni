@@ -1,15 +1,14 @@
 package org.lessons.springlamiapizzeriacrud.Controller;
 
+import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.Model.Pizza;
 import org.lessons.springlamiapizzeriacrud.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -44,12 +43,16 @@ public class PizzeriaController {
 
     @GetMapping("/create")
     public String create(Model model) {
-        model.addAttribute("pizze", new Pizza());
+        model.addAttribute("pizza", new Pizza());
         return "pizze/create";
     }
 
     @PostMapping("/create")
-    public String store(Pizza formPizza) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "pizze/create";
+        }
+
         Pizza savePizza = pizzaRepository.save(formPizza);
         return "redirect: /pizze/show/" + savePizza.getId();
     }
