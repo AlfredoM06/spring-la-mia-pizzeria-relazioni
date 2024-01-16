@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +65,7 @@ public class PizzeriaController {
             model.addAttribute("pizza", result.get());
             return "pizze/edit";
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id" + id + "not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
 
         }
 
@@ -79,5 +80,16 @@ public class PizzeriaController {
         return "redirect:/pizze/show/" + id;
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        Optional<Pizza> result = pizzaRepository.findById(id);
+        if (result.isPresent()) {
+            pizzaRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Pizza " + result.get().getName() + " deleted!");
+            return "redirect:/pizze";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
+        }
 
+    }
 }
