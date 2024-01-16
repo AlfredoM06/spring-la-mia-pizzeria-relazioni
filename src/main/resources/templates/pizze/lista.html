@@ -1,14 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-          crossorigin="anonymous">
-    <title>Lista Pizze</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Lista Pizze')"></head>
 <body>
+<nav th:replace="fragments/navbar :: topNavbar('pizze')"></nav>
 <div class="container">
     <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show mt-4" role="alert">
         <div th:text="${message}"></div>
@@ -20,6 +14,19 @@
     </h1>
     <div class="alert alert-info" th:if="${listaPizze.size() == 0}">
         The list is empty
+    </div>
+    <div class="row mb-3 ">
+        <form id="pizza-search"
+              th:action="@{/pizze}"
+              method="get"
+              class="col-5"
+        >
+            <div class="input-group">
+                <input class="form-control" type="text" name="search" id="search" placeholder="Search Pizza by name"
+                       th:value="${preloadSearch}">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </form>
     </div>
     <table class="table" th:unless="${listaPizze.size() == 0}">
         <thead>
@@ -33,15 +40,17 @@
             <td th:text="${pizza.name}"></td>
             <td th:text="${pizza.price}"></td>
             <td class="d-flex justify-content-between">
-                <a class="btn btn-primary" th:href="@{/pizze/show/{id}(id=${pizza.id})}">Detail</a>
-                <a class="btn btn-primary" th:href="@{/pizze/edit/{id}(id=${pizza.id})}">Edit</a>
+                <a class="btn btn-primary" th:href="@{/pizze/show/{id}(id=${pizza.id})}">
+                    <i class="fa-solid fa-book"></i></a>
+                <a class="btn btn-primary" th:href="@{/pizze/edit/{id}(id=${pizza.id})}">
+                    <i class="fa-solid fa-pen-to-square"></i></a>
                 <form
                         th:action="@{/pizze/delete/{id}(id=${pizza.id})}"
                         method="post"
                         onsubmit="return confirm('are u sure ?')"
                 >
                     <button type="submit" class="btn btn-primary">
-                        Delete
+                        <i class="fa-solid fa-trash-can"></i>
                     </button>
                 </form>
             </td>
@@ -55,8 +64,6 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+<th:block th:replace="fragments/resources :: script"></th:block>
 </body>
 </html>

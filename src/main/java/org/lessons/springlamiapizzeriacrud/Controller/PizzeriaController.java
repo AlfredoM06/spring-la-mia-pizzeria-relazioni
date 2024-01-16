@@ -22,9 +22,15 @@ public class PizzeriaController {
     private PizzaRepository pizzaRepository;
 
     @GetMapping
-    public String index(Model model) {
-        List<Pizza> listaPizze = pizzaRepository.findAll();
+    public String index(@RequestParam(name = "search", required = false) String searchKeyword, Model model) {
+        List<Pizza> listaPizze;
+        if (searchKeyword != null) {
+            listaPizze = pizzaRepository.findByNameContaining(searchKeyword);
+        } else {
+            listaPizze = pizzaRepository.findAll();
+        }
         model.addAttribute("listaPizze", listaPizze);
+        model.addAttribute("preloadSearch", searchKeyword);
         return "pizze/lista";
     }
 
@@ -90,6 +96,14 @@ public class PizzeriaController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
         }
-
     }
+
+  /*
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "search") String searchKeyword, Model model) {
+        List<Pizza> listaPizze = pizzaRepository.findByNameContaining(searchKeyword);
+        model.addAttribute("listaPizze", listaPizze);
+        return "pizze/lista";
+    }
+  */
 }
