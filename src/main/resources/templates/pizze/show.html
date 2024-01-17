@@ -30,13 +30,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="offerta : ${pizza.offerte}">
+            <tr th:each="offerta : ${pizza.offerte}"
+                th:classappend="${offerta.isExpired() ? 'table-danger' : 'table-success'}">
                 <td th:text="${offerta.title}"></td>
                 <td th:text="${offerta.startDate}"></td>
                 <td th:text="${offerta.endDate}"></td>
-                <td>
+                <td class="d-flex justify-content-between">
                     <a class="btn btn-primary" th:href="@{/offerte/edit/{id}(id=${offerta.id})}">
                         <i class="fa-solid fa-pen-to-square"></i></a>
+                    <form
+                            th:action="@{/offerte/delete/{id}(id=${offerta.id})}"
+                            method="post"
+                            onsubmit="return confirm('are u sure ?')"
+                    >
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
             </tbody>

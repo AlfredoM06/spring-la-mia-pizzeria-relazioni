@@ -75,8 +75,23 @@ public class OfferteController {
     }
 
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable Integer id, Offerta formOfferta) {
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("offerta") Offerta formOfferta, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "offerte/edit";
+        }
         Offerta updatedOfferta = offerteRepository.save(formOfferta);
         return "redirect:/pizze/show/" + updatedOfferta.getPizza().getId();
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        Optional<Offerta> result = offerteRepository.findById(id);
+        if (result.isPresent()) {
+            Offerta offertaToDelete = result.get();
+            offerteRepository.delete(result.get());
+            return "redirect:/pizze/show/" + offertaToDelete.getPizza().getId();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Offerta with id " + id + " not found");
+        }
     }
 }
