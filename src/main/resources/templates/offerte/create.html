@@ -10,7 +10,7 @@
     <form
             id="create-offerta"
             method="post"
-            th:action="@{offerte/create}"
+            th:action="@{/offerte/create}"
             th:object="${offerta}"
     >
         <input type="hidden" th:field="*{pizza}">
