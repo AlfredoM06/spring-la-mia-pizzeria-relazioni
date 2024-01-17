@@ -53,8 +53,30 @@ public class OfferteController {
             model.addAttribute("pizza", formOfferta.getPizza());
             return "offerte/create";
         }
+
+        if (formOfferta.getEndDate() != null && formOfferta.getEndDate().isBefore(formOfferta.getStartDate())) {
+            formOfferta.setEndDate(formOfferta.getStartDate().plusDays(30));
+        }
+
         Offerta storedOfferta = offerteRepository.save(formOfferta);
         return "redirect:/pizze/show/" + storedOfferta.getPizza().getId();
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Optional<Offerta> result = offerteRepository.findById(id);
+        if (result.isPresent()) {
+            Offerta formOfferta = result.get();
+            model.addAttribute("offerta", formOfferta);
+            return "offerte/edit";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Offerta with id " + id + " not found");
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable Integer id, Offerta formOfferta) {
+        Offerta updatedOfferta = offerteRepository.save(formOfferta);
+        return "redirect:/pizze/show/" + updatedOfferta.getPizza().getId();
+    }
 }
