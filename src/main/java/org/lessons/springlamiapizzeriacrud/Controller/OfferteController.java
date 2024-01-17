@@ -1,5 +1,6 @@
 package org.lessons.springlamiapizzeriacrud.Controller;
 
+import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.Model.Offerta;
 import org.lessons.springlamiapizzeriacrud.Model.Pizza;
 import org.lessons.springlamiapizzeriacrud.Repository.OfferteRepository;
@@ -8,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -49,7 +48,11 @@ public class OfferteController {
 
 
     @PostMapping("/create")
-    public String store(Offerta formOfferta) {
+    public String store(@Valid @ModelAttribute("offerta") Offerta formOfferta, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("pizza", formOfferta.getPizza());
+            return "offerte/create";
+        }
         Offerta storedOfferta = offerteRepository.save(formOfferta);
         return "redirect:/pizze/show/" + storedOfferta.getPizza().getId();
     }

@@ -1,6 +1,8 @@
 package org.lessons.springlamiapizzeriacrud.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
@@ -10,7 +12,9 @@ public class Offerta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    @NotEmpty
     private String title;
+    @PastOrPresent
     private LocalDate startDate;
     private LocalDate endDate;
 
