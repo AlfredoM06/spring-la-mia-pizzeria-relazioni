@@ -3,15 +3,44 @@
 <head th:replace="fragments/resources :: head('Dettagli Pizze')"></head>
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizze')"></nav>
-<div class="container">
-    <h2 th:text="${pizza.name}"></h2>
-    <h2> Ecco i dettagli </h2>
-    <p> descrizione: <span th:text="${pizza.description}"></span></p>
-    <img th:src="${pizza.foto}" alt="foto">
-    <div>
-        <a th:href="@{/pizze}" class="btn btn-primary"> Back to list </a>
-    </div>
-</div>
+<main class="container">
+    <section>
+        <h2 th:text="${pizza.name}"></h2>
+        <h2> Ecco i dettagli </h2>
+        <p> descrizione: <span th:text="${pizza.description}"></span></p>
+        <img th:src="${pizza.foto}" alt="foto">
+        <div>
+            <a th:href="@{/pizze}" class="btn btn-primary">
+                <i class="fa-solid fa-arrow-left"></i> Back to list
+            </a>
+        </div>
+    </section>
+    <section class="mt-5">
+        <h3>
+            <span>Offerte</span>
+            <a th:href="@{/offerte/create(pizzaId = ${pizza.id})}" class="btn btn-primary">+</a>
+        </h3>
+        <table class="table" th:if="${pizza.offerte.size() > 0}">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Start Date</th>
+                <th>Expire Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="offerta : ${pizza.offerte}">
+                <td th:text="${offerta.title}"></td>
+                <td th:text="${offerta.startDate}"></td>
+                <td th:text="${offerta.endDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" th:unless="${pizza.offerte.size() > 0}">
+            This offer has not been done yet
+        </div>
+    </section>
+</main>
 
 <th:block th:replace="fragments/resources :: script"></th:block>
 </body>
