@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Offerta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
     @NotEmpty
     private String title;
     @PastOrPresent

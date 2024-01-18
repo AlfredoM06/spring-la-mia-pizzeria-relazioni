@@ -26,6 +26,9 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     private List<Offerta> offerte;
 
+    @ManyToMany
+    private List<Ingrediente> ingredienti;
+
     public Integer getId() {
         return id;
     }
