@@ -4,12 +4,22 @@
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizze')"></nav>
 <main class="container">
-    <section>
+    <section class="row">
         <h2 th:text="${pizza.name}"></h2>
-        <h2> Ecco i dettagli </h2>
-        <p> descrizione: <span th:text="${pizza.description}"></span></p>
-        <img th:src="${pizza.foto}" alt="foto">
-        <div>
+
+        <hr>
+        <div class="col-6">
+            <h2> Ecco i dettagli </h2>
+            <p> descrizione: <span th:text="${pizza.description}"></span></p>
+            <img th:src="${pizza.foto}" alt="foto">
+        </div>
+        <div class="col-6">
+            <h2>Ingredienti</h2>
+            <ul>
+                <li th:each="ingr : ${pizza.ingredienti}" th:text="${ingr.name}"></li>
+            </ul>
+        </div>
+        <div class="mt-3">
             <a th:href="@{/pizze}" class="btn btn-primary">
                 <i class="fa-solid fa-arrow-left"></i> Back to list
             </a>

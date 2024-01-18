@@ -11,41 +11,55 @@
         th:action="@{/pizze/edit/{id}(id=${pizza.id})}"
         class="row gy-3"
 >
-    <div class="col-6">
-        <label class="form-label" for="name">Nome</label>
-        <input class="form-control" type="text" id="name" th:field="*{name}" th:errorClass="is-invalid">
-        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
-            <ul>
-                <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
-            </ul>
+    <div class="col-8">
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label" for="name">Nome</label>
+                <input class="form-control" type="text" id="name" th:field="*{name}" th:errorClass="is-invalid">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-3">
+                <label class="form-label" for="price">Prezzo</label>
+                <input class="form-control" type="number" id="price" th:field="*{price}" th:errorClass="is-invalid">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" for="foto">Foto</label>
+                <input class="form-control" type="text" id="foto" th:field="*{foto}" th:errorClass="is-invalid">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('foto')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('foto')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <label for="description" class="form-label">Descrizione</label>
+                <textarea class="form-control" rows="5" id="description" th:field="*{description}"
+                          th:errorClass="is-invalid"></textarea>
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-3">
-        <label class="form-label" for="price">Prezzo</label>
-        <input class="form-control" type="number" id="price" th:field="*{price}" th:errorClass="is-invalid">
-        <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
-            <ul>
-                <li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
-            </ul>
-        </div>
-    </div>
-    <div>
-        <label class="form-label" for="foto">Foto</label>
-        <input class="form-control" type="text" id="foto" th:field="*{foto}" th:errorClass="is-invalid">
-        <div class="invalid-feedback" th:if="${#fields.hasErrors('foto')}">
-            <ul>
-                <li th:each="err : ${#fields.errors('foto')}" th:text="${err}"></li>
-            </ul>
-        </div>
-    </div>
-    <div>
-        <label for="description" class="form-label">Descrizione</label>
-        <textarea class="form-control" rows="5" id="description" th:field="*{description}"
-                  th:errorClass="is-invalid"></textarea>
-        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
-            <ul>
-                <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
-            </ul>
+    <div class="col-4">
+        <div class="row">
+            <h3>Ingredienti</h3>
+            <div class="form-check" th:each="ingr : ${listaIngredienti}">
+                <input class="form-check-input" type="checkbox" th:value="${ingr.id}" th:id="|ingr-${ingr.id}|">
+                <label class="form-check-label" th:for="|ingr-${ingr.id}|" th:text="${ingr.name}">
+                </label>
+            </div>
         </div>
     </div>
     <div>
