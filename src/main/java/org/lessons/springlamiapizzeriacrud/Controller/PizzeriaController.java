@@ -2,6 +2,7 @@ package org.lessons.springlamiapizzeriacrud.Controller;
 
 import jakarta.validation.Valid;
 import org.lessons.springlamiapizzeriacrud.Model.Pizza;
+import org.lessons.springlamiapizzeriacrud.Repository.IngredientiRepository;
 import org.lessons.springlamiapizzeriacrud.Repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ import java.util.Optional;
 public class PizzeriaController {
     @Autowired
     private PizzaRepository pizzaRepository;
+
+    @Autowired
+    private IngredientiRepository ingredientiRepository;
 
     @GetMapping
     public String index(@RequestParam(name = "search", required = false) String searchKeyword, Model model) {
@@ -51,12 +55,14 @@ public class PizzeriaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("listaIngredienti", ingredientiRepository.findAll());
         return "pizze/create";
     }
 
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("listaIngredienti", ingredientiRepository.findAll());
             return "pizze/create";
         }
 
