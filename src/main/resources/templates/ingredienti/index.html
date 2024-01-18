@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Lista Ingredienti')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('ingredienti')"></nav>
+<main>
+    <h1>Ingredienti</h1>
+    <hr>
+    <ul class="list-group" th:if="${listaIngredienti.size() > 0}">
+        <li class="list-group-item d-flex" th:each="ingr : ${listaIngredienti}">
+            <p th:text="|${ingr.name}|"></p>
+            <div>
+                <a th:href="@{/ingredienti/edit/{id}(id=${ingr.id})}" class="btn btn-primary">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <form class="d-inline-block" th:action="@{/ingredienti/delete/{id}(id=${ingr.id})}"
+                      method="post"
+                      onsubmit="return confirm('Sei sicuro di voler eliminare questo ingrediente?')">
+                    <button type="submit" class="btn  btn-primary"><i
+                            class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </li>
+    </ul>
+    <div th:unless="${listaIngredienti.size() > 0}" class="alert alert-info">
+        Non ci sono ingredienti
+    </div>
+    <div class="mt-3">
+        <a th:href="@{ingredienti/create}" class="btn btn-primary"> Aggiungi Ingrediente </a>
+    </div>
+</main>
+<th:block th:replace="fragments/resources :: script"></th:block>
+</body>
+</html>
