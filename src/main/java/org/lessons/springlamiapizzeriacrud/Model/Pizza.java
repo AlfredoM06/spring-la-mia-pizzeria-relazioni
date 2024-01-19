@@ -76,4 +76,12 @@ public class Pizza {
     public void setOfferte(List<Offerta> offerte) {
         this.offerte = offerte;
     }
+
+    public List<Ingrediente> getIngredienti() {
+        return ingredienti;
+    }
+
+    public void setIngredienti(List<Ingrediente> ingredienti) {
+        this.ingredienti = ingredienti;
+    }
 }

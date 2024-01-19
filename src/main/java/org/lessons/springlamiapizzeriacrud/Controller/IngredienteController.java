@@ -60,7 +60,7 @@ public class IngredienteController {
         if (bindingResult.hasErrors()) {
             return "ingredienti/create";
         }
-
+        formIngrediente.setId(id);
         Ingrediente updatedIngrediente = ingredientiRepository.save(formIngrediente);
         return "redirect:/ingredienti";
     }
@@ -71,9 +71,9 @@ public class IngredienteController {
         if (result.isPresent()) {
             ingredientiRepository.deleteById(id);
             redirectAttributes.addFlashAttribute("message", "L'ingrediente " + result.get().getName() + " è stato eliminato");
-            return "redirect:/ingredients";
+            return "redirect:/ingredienti";
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "l'ingrediente con id " + id + "non è stato trovato");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "l'ingrediente con id " + id + " non è stato trovato");
         }
     }
 
